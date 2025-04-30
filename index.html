@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Registration</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header class="header">
+  <nav>
+    <div class="nav-container">
+      <img src="/Image/VGU LOGO.png" alt="Vivekanandan Global University, Jaipur" width="10%" height="10%">
+      <img src="/Image/VGU LOGO Text.png" alt="DBMS" width="25%" height="25%">
+      <a href="regestration.html">Register</a>
+    </div>
+  </nav>
+</header>
+
+  <!-- Welcome Section -->
+ <section class="welcome-section">
+    <div class="welcome-text">
+        <h2>Welcome To Course Registration Portal</h2>
+        <p>According To NEP Regester Now For Ability Enhancement Course (AEC), Skill Enhancement Course (SEC) & Value Addition Course (VAC)</p>
+        <button class="btn" onclick="myFunction()">Register Now</button>
+        
+        <!--Alert Message-->
+        <script>
+            function myFunction() {
+              window.location.href = "regestration.html";;
+            }
+            </script>
+
+    </div>
+    <img src="/Image/books.png" alt="book">
+
+</section>
+
+
+  <section id="form-container" style="display: none;">
+    <div class="form-box">
+      <h2>Courses Registeration form </h2>
+      <form id="registration-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+        <label for="enrollment">Enrollment No.:</label>
+        <input type="text" id="enrollment" name="enrollment" placeholder="Enter your enrollment number" required>
+
+        <label for="aec">Select AEC Course:</label>
+        <select id="aec" name="aec">
+          <option value="aec1">Select AEC Course:</option>
+          <option value="aec1">English: Communication & Soft Skills</option>
+          <option value="aec2">English: Technical/Business Writing </option>
+          <option value="aec1">English: Social media & Blog writing</option>
+          <option value="aec2">Mental Ability & Reasoning</option>
+          <option value="aec2">Fundamentals of Indian Constitution</option>
+          <option value="aec2">German Language</option>
+          <option value="aec2">French Language</option>
+        </select>
+
+        <label for="vac">Select VAC Course:</label>
+        <select id="vac" name="vac">
+          <option value="vac1">Select VAC Course:</option>
+          <option value="vac1">Computer Ethics</option>
+          <option value="vac1">Environment Science</option>
+          <option value="vac2">Indian Knowledge System</option>
+          <option value="vac2">Emotional Intelligence </option>
+          <option value="vac2">Essence of Bhagwat Gita</option>
+          <option value="vac2">Lessons from Ramanyana</option>
+        </select>
+
+        <label for="sec">Select SEC Course:</label>
+        <select id="sec" name="sec">
+          <option value="sec1">Select SEC Course:</option>
+          <option value="sec2">Python</option>
+          <option value="sec2">Design Thinking</option>
+          <option value="sec2">Sports-l</option>
+          <option value="sec2">Sports-ll</option>
+          <option value="sec2">Sports-lll</option>
+        </select>
+
+        <button type="submit" class="btn-primary">Register</button>
+      </form>
+    </div>
+  </section>
+
+  
+
+  <script src="script.js"></script>
+</body>
+</html>

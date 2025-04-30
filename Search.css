@@ -1,0 +1,65 @@
+* {
+    box-sizing: border-box;
+}
+
+/* Style the container */
+#search-container {
+    text-align: center;
+    margin-top: 20px;
+    font-family: Arial, sans-serif;
+}
+
+/* Style the heading */
+#search-container h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom:20px;
+}
+
+/* Style the search input and button to appear together */
+#search-enrollment {
+    padding: 10px;
+    font-size: 17px;
+    margin-left: 25%;
+    width: 45%;
+    border: 1px solid grey;
+    border-right: none; /* Prevent double borders */
+    background: #f1f1f1;
+    border-radius: 5px 0 0 5px;
+    float: left;
+}
+
+/* Style the button */
+#search-form-btn {
+    padding: 10px 20px !important;
+    font-size: 17px;
+    color: white;
+    background-color: #2196F3;
+    border: 1px solid grey;
+    border-left: none; /* Prevent double borders */
+    border-radius: 0 5px 5px 0;
+    cursor: pointer;
+    float: left;
+    transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+#search-form-btn:hover {
+    background-color: #0b7dda;
+}
+
+/* Clear floats */
+#search-container::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+/* Style the result text */
+#search-result {
+    margin-top: 20px;
+    color: red;
+    font-size: larger;
+    font-weight: bold;
+    display: none;
+}

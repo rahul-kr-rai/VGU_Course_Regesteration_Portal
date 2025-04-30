@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Course Registration</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  
+</head>
+<body>
+  <header class="header">
+    <nav>
+      <div class="nav-container">
+        <img src="/Image/VGU LOGO.png" alt="Vivekanandan Global University, Jaipur" width="10%" height="10%">
+        <img src="/Image/VGU LOGO Text.png" alt="DBMS" width="25%" height="25%">
+        <button id="register-btn" class="btn-reg">Register</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- Search Form -->
+  <section id="search-container" style="text-align: center; margin-top: 20px;">
+    <h2>Search Your Registered Courses</h2>
+    <input type="text" id="search-enrollment" placeholder="Enter Enrollment Number" />
+    <button id="search-form-btn" class="button-primary" style="padding: 5px 10px; margin-left: 10px;">Search </button>
+    <div>
+       <p id="search-result" style="margin-top: 20px; color: red; display: none; font-size: larger; font-weight: bold;">No records found.</p>
+    </div>
+  </section>
+
+  <!-- Registration Form -->
+  <section id="form-container" style="display: none;">
+    <div class="form-box">
+      <h2 id="form-title">Courses Registration Form</h2>
+      <form id="registration-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+
+        <label for="enrollment">Enrollment No.:</label>
+        <input type="text" id="enrollment" name="enrollment" placeholder="Enter your enrollment number" required>
+
+        <label for="aec">Select AEC Course:</label>
+        <select id="aec" name="aec" required>
+          <option value="" disabled selected>Select AEC Course</option>
+          <option value="English: Communication & Soft Skills">English: Communication & Soft Skills</option>
+          <option value="English: Technical/Business Writing">English: Technical/Business Writing</option>
+          <option value="English: Social Media & Blog Writing">English: Social Media & Blog Writing</option>
+          <option value="Mental Ability & Reasoning">Mental Ability & Reasoning</option>
+          <option value="Fundamentals of Indian Constitution">Fundamentals of Indian Constitution</option>
+          <option value="German Language">German Language</option>
+          <option value="French Language">French Language</option>
+        </select>
+
+        <label for="vac">Select VAC Course:</label>
+        <select id="vac" name="vac" required>
+          <option value="" disabled selected>Select VAC Course</option>
+          <option value="Computer Ethics">Computer Ethics</option>
+          <option value="Environment Science">Environment Science</option>
+          <option value="Indian Knowledge System">Indian Knowledge System</option>
+          <option value="Emotional Intelligence">Emotional Intelligence</option>
+          <option value="Essence of Bhagwat Gita">Essence of Bhagwat Gita</option>
+          <option value="Lessons from Ramayana">Lessons from Ramayana</option>
+        </select>
+
+        <label for="sec">Select SEC Course:</label>
+        <select id="sec" name="sec">
+          <option value="" disabled selected>Select SEC Course</option>
+          <option value="Python">Python</option>
+          <option value="Design Thinking">Design Thinking</option>
+          <option value="Sports-I">Sports-I</option>
+          <option value="Sports-II">Sports-II</option>
+          <option value="Sports-III">Sports-III</option>
+        </select>
+
+        <button type="submit" class="btn-primary">Submit</button>
+      </form>
+    </div>
+  </section>
+
+  <div id="success-message" style="display: none; color: green; font-size: 16px; text-align: center;">
+    <span>&#10004;</span> Course Registration Successful!
+  </div>
+
+  <!-- Registered Courses Table -->
+  <section id="registered-courses">
+    <center>
+      <img id="registered-image" src="/Image/ActiveCourse.png" alt="Registered Courses" style="height: 15%; width: 15%; display: none;">
+    </center>
+    <table id="course-list" style="width: 80%; margin: 20px auto; border-collapse: collapse; display: none;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid #ccc; padding: 8px; background-color: #f0f0f0;">Name</th>
+          <th style="border: 1px solid #ccc; padding: 8px; background-color: #f0f0f0;">Enrollment No.</th>
+          <th style="border: 1px solid #ccc; padding: 8px; background-color: #f0f0f0;">AEC</th>
+          <th style="border: 1px solid #ccc; padding: 8px; background-color: #f0f0f0;">VAC</th>
+          <th style="border: 1px solid #ccc; padding: 8px; background-color: #f0f0f0;">SEC</th>
+          <th style="border: 1px solid #ccc; padding: 8px; background-color: #f0f0f0;">Action</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

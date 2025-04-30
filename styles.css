@@ -1,0 +1,298 @@
+/* styles.css */
+
+/* General Styles */
+
+
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    color: #333;
+  }
+
+  .header {
+   
+    border-bottom: 2px solid  #720000;
+    width: 100%;
+}
+  
+  h1, h2 {
+    color: #444;
+  }
+  
+  /* Navigation Bar */
+  nav {
+    background-color: #ffffff;
+    color: white;
+    padding: 15px 20px;
+  }
+  
+  .nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .nav-container a{
+    width: 5%;
+    height: 4%;
+    padding: 15px 20px;
+    background: #D451DD;
+    border-radius: 11px;
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  .nav-container a:hover{
+    width: 5%;
+    height: 4%;
+    padding: 15px 20px;
+    background: #1057FD;
+    border-radius: 11px;
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  nav h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .btn-primary {
+    width: 125px;
+    height: 50px;
+    padding: 10px 20px;
+    background: #D451DD;
+    border-radius: 11px;
+    border: none;
+    color: #fff;
+    font-size: 17px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .btn-primary:hover {
+    background-color: #1057FD;
+  }
+  
+ /* Improved Registration Form with Proper Spacing, Padding, and Alignment */
+#form-container {
+  max-width: 600px;
+  margin: 2em auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.form-box h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  color: #444;
+  text-align: center;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+}
+
+input, select {
+  width: calc(100% - 20px); /* Added padding adjustment */
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px; /* Spacing between fields */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  font-size: 14px;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #007BFF;
+  box-shadow: 0px 0px 5px #7c40ff;
+}
+
+button.btn-primary {
+  width: 100%;
+  padding: 12px;
+  margin-top: 20px;
+  background: #D451DD;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+button.btn-primary:hover {
+  background-color: #1057FD;
+}
+
+#register-btn{
+   
+    width: 10%;
+    padding: 15px;
+    margin-top: 20px;
+    background: #D451DD;
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  #register-btn:hover{
+    background-color: #1057FD;
+  }
+
+.form-box {
+  display: flex;
+  flex-direction: column; /* Aligning items properly */
+  justify-content: center;
+  align-items: stretch;
+}
+
+#registration-form {
+  width: 100%; /* Proper form alignment */
+}
+
+
+  
+
+  /*--------------------------------------------------------BODY SECTION---------------------------------------------------------*/
+     /* Welcome section styles */
+     .welcome-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #f4f4f4;
+        
+        
+         
+        padding: 50px;
+        animation: forwards;
+        animation-delay: 0.5s;
+        
+        
+    
+        text-align: left;
+     }
+     .welcome-section  .btn {
+            width: 25%;
+            height: 50px;
+            background: #D451DD;
+            border-radius: 11px;
+            border: none;
+            color: #fff;
+            font-size: 17px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 50px;
+            justify-content: space-between;
+            
+        }
+        
+        .welcome-section .btn:hover {
+            background: #1057FD;
+            color: #ffffff;
+          
+        }
+    .welcome-section .welcome-text {
+        max-width: 50%;
+    }
+
+    .welcome-section h2 {
+        color: #FF5353;
+        font-size: 45px;
+        text-align: center;
+        animation:forwards 5s;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+    }
+
+    .welcome-section p {
+        font-size: 18px;
+        color: #333;
+        line-height: 1.6;
+        padding-bottom: 20px;
+    }
+
+    /* Image styling */
+    .welcome-section img {
+        max-width: 45%;
+        height: auto;
+        justify-content: center;
+        border-radius: 20px;
+    }
+    .welcome-section img:hover {
+      box-shadow: #333 0px 0px 10px;
+      max-width: 45%;
+      height: auto;
+      justify-content: center;
+      border-radius: 10px;
+      border-top-right-radius: 80px;
+      border-bottom-left-radius: 80px;
+
+  }
+
+
+  /* Style for the search container */
+  #search-container {
+    display: block; /* Change from flex to block to ensure child elements stack vertically */
+    text-align: center; /* Keep elements centered */
+    margin-top: 20px;
+  }
+  
+  #search-result {
+    margin-top: 20px;
+    color: red;
+    display: block; /* Ensures it takes its own line */
+    font-size: larger;
+    font-weight: bold;
+  }
+  
+
+/* Style for the search input */
+#search-enrollment {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 300px;           /* Set a fixed width for the input */
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+}
+
+/* Style for the search button */
+#search-form-btn {
+  padding: 10px 20px !important;
+  font-size: 16px;
+  background-color: #FE433C;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Adds a hover effect */
+}
+
+#search-form-btn:hover {
+  background-color: #1057FD; /* Darker blue on hover */
+}
+
+
