@@ -9,14 +9,14 @@ This is the Vivekananda Global University, Jaipur (VGU) course registration port
 If the student has not registered yet and searches, then the " no records found " message shows.
 
 
+![2](https://github.com/user-attachments/assets/f4056f47-e30a-4a04-aca3-9aea9b0c16b1)
 
-![3](https://github.com/user-attachments/assets/ffa19a7b-52d1-4d8f-a094-18996b96bced)
 
 
 
 **>>Here, students can search their enrollment**
 
-![2](https://github.com/user-attachments/assets/f4056f47-e30a-4a04-aca3-9aea9b0c16b1)
+![3](https://github.com/user-attachments/assets/ffa19a7b-52d1-4d8f-a094-18996b96bced)
 
 
 
