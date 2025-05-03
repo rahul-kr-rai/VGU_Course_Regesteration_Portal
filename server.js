@@ -1,24 +1,31 @@
+require('dotenv').config(); // Load environment variables
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql2');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Allow configurable port
 
 app.use(cors());
 app.use(bodyParser.json());
 
-// MySQL connection
+// MySQL connection using environment variables
 const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'course_registration',
+  host: process.env.DB_HOST || 'localhost',
+  user: process.env.DB_USER || 'root',
+  password: process.env.DB_PASSWORD || '1234',
+  database: process.env.DB_NAME || 'course_registration',
+  port: process.env.DB_PORT || 3306
 });
 
+// Connect to MySQL with error handling
 db.connect((err) => {
-  if (err) throw err;
+  if (err) {
+    console.error("Error connecting to MySQL:", err.message);
+    process.exit(1); // Stop server if DB connection fails
+  }
   console.log("Connected to MySQL!");
 });
 
@@ -31,7 +38,8 @@ app.post('/register', (req, res) => {
       if (err.code === 'ER_DUP_ENTRY') {
         res.status(400).send('Enrollment number already registered!');
       } else {
-        throw err;
+        console.error("Database error:", err.message);
+        res.status(500).send("Internal server error.");
       }
     } else {
       res.json({ name, enrollment, aec, vac, sec });
@@ -43,10 +51,12 @@ app.post('/register', (req, res) => {
 app.put('/update/:enrollment', (req, res) => {
   const { enrollment } = req.params;
   const { name, aec, vac, sec } = req.body;
-  const sql = 'UPDATE registrations SET name = ?, aec = ?, vac = ?, sec = ? WHERE enrollment = ?';
+  const sql = 'UPDATE registrations SET name = ?, aec = ?, vac, sec = ? WHERE enrollment = ?';
   db.query(sql, [name, aec, vac, sec, enrollment], (err, results) => {
-    if (err) throw err;
-    if (results.affectedRows === 0) {
+    if (err) {
+      console.error("Database error:", err.message);
+      res.status(500).send("Internal server error.");
+    } else if (results.affectedRows === 0) {
       res.status(404).send('Enrollment not found!');
     } else {
       res.json({ name, enrollment, aec, vac, sec });
@@ -59,8 +69,12 @@ app.delete('/deregister/:enrollment', (req, res) => {
   const { enrollment } = req.params;
   const sql = 'DELETE FROM registrations WHERE enrollment = ?';
   db.query(sql, [enrollment], (err) => {
-    if (err) throw err;
-    res.sendStatus(200);
+    if (err) {
+      console.error("Database error:", err.message);
+      res.status(500).send("Internal server error.");
+    } else {
+      res.sendStatus(200);
+    }
   });
 });
 
@@ -68,11 +82,11 @@ app.delete('/deregister/:enrollment', (req, res) => {
 app.get('/search/:enrollment', (req, res) => {
   const { enrollment } = req.params;
   const sql = 'SELECT * FROM registrations WHERE enrollment = ?';
-  
+
   db.query(sql, [enrollment], (err, results) => {
     if (err) {
-      console.error(err);
-      res.status(500).send('An error occurred while searching.');
+      console.error("Database error:", err.message);
+      res.status(500).send("Internal server error.");
     } else if (results.length === 0) {
       res.status(404).send('No records found.');
     } else {
