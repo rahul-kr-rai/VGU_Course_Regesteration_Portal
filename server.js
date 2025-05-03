@@ -1,100 +1,75 @@
-require('dotenv').config(); // Load environment variables
-
 const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
 const mysql = require('mysql2');
+const cors = require('cors');
+require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 3000; // Allow configurable port
+const port = 3000;
 
+// Middleware
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-// MySQL connection using environment variables
+// Database connection (Using environment variables for security)
 const db = mysql.createConnection({
-  host: process.env.DB_HOST || 'localhost',
-  user: process.env.DB_USER || 'root',
-  password: process.env.DB_PASSWORD || '1234',
-  database: process.env.DB_NAME || 'course_registration',
-  port: process.env.DB_PORT || 3306
+    host: process.env.DB_HOST || 'mysql-1b51f828-vgu-course-registeration.l.aivencloud.com',
+    user: process.env.DB_USER || 'avnadmin',
+    password: process.env.DB_PASSWORD || 'AVNS_TiROloXiWS7zRfsiwPt',
+    database: process.env.DB_NAME || 'course_registration',
+    port: process.env.DB_PORT || 10282
 });
 
-// Connect to MySQL with error handling
-db.connect((err) => {
-  if (err) {
-    console.error("Error connecting to MySQL:", err.message);
-    process.exit(1); // Stop server if DB connection fails
-  }
-  console.log("Connected to MySQL!");
+db.connect(err => {
+    if (err) {
+        console.error('Database connection failed:', err);
+        return;
+    }
+    console.log('Connected to the database');
 });
 
-// Register course
+// Register a new course
 app.post('/register', (req, res) => {
-  const { name, enrollment, aec, vac, sec } = req.body;
-  const sql = 'INSERT INTO registrations (enrollment, name, aec, vac, sec) VALUES (?, ?, ?, ?, ?)';
-  db.query(sql, [enrollment, name, aec, vac, sec], (err) => {
-    if (err) {
-      if (err.code === 'ER_DUP_ENTRY') {
-        res.status(400).send('Enrollment number already registered!');
-      } else {
-        console.error("Database error:", err.message);
-        res.status(500).send("Internal server error.");
-      }
-    } else {
-      res.json({ name, enrollment, aec, vac, sec });
-    }
-  });
+    const { name, enrollment, aec, vac, sec } = req.body;
+    const sql = 'INSERT INTO courses (name, enrollment, aec, vac, sec) VALUES (?, ?, ?, ?, ?)';
+    db.query(sql, [name, enrollment, aec, vac, sec], (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.status(201).json({ name, enrollment, aec, vac, sec });
+    });
 });
 
-// Update course
+// Update an existing course
 app.put('/update/:enrollment', (req, res) => {
-  const { enrollment } = req.params;
-  const { name, aec, vac, sec } = req.body;
-  const sql = 'UPDATE registrations SET name = ?, aec = ?, vac, sec = ? WHERE enrollment = ?';
-  db.query(sql, [name, aec, vac, sec, enrollment], (err, results) => {
-    if (err) {
-      console.error("Database error:", err.message);
-      res.status(500).send("Internal server error.");
-    } else if (results.affectedRows === 0) {
-      res.status(404).send('Enrollment not found!');
-    } else {
-      res.json({ name, enrollment, aec, vac, sec });
-    }
-  });
-});
-
-// Deregister course
-app.delete('/deregister/:enrollment', (req, res) => {
-  const { enrollment } = req.params;
-  const sql = 'DELETE FROM registrations WHERE enrollment = ?';
-  db.query(sql, [enrollment], (err) => {
-    if (err) {
-      console.error("Database error:", err.message);
-      res.status(500).send("Internal server error.");
-    } else {
-      res.sendStatus(200);
-    }
-  });
+    const { name, aec, vac, sec } = req.body;
+    const enrollment = req.params.enrollment;
+    const sql = 'UPDATE courses SET name=?, aec=?, vac=?, sec=? WHERE enrollment=?';
+    db.query(sql, [name, aec, vac, sec, enrollment], (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.json({ name, enrollment, aec, vac, sec });
+    });
 });
 
 // Search for a course by enrollment number
 app.get('/search/:enrollment', (req, res) => {
-  const { enrollment } = req.params;
-  const sql = 'SELECT * FROM registrations WHERE enrollment = ?';
-
-  db.query(sql, [enrollment], (err, results) => {
-    if (err) {
-      console.error("Database error:", err.message);
-      res.status(500).send("Internal server error.");
-    } else if (results.length === 0) {
-      res.status(404).send('No records found.');
-    } else {
-      res.json(results[0]); // Send the matching record
-    }
-  });
+    const enrollment = req.params.enrollment;
+    const sql = 'SELECT * FROM courses WHERE enrollment=?';
+    db.query(sql, [enrollment], (err, results) => {
+        if (err) return res.status(500).send(err);
+        if (results.length > 0) res.json(results[0]);
+        else res.status(404).send('No records found.');
+    });
 });
 
+// Deregister a course
+app.delete('/deregister/:enrollment', (req, res) => {
+    const enrollment = req.params.enrollment;
+    const sql = 'DELETE FROM courses WHERE enrollment=?';
+    db.query(sql, [enrollment], (err, results) => {
+        if (err) return res.status(500).send(err);
+        res.send('Course deregistered successfully.');
+    });
+});
+
+// Start the server
 app.listen(port, () => {
-  console.log(`Server running at https://vgu-course-regesteration-portal-1.onrender.com:${port}`);
+    console.log(`Server running on http://localhost:${port}`);
 });
