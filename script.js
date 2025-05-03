@@ -1,3 +1,6 @@
+// Define the server details
+const SERVER_URL = "https://mysql-1b51f828-vgu-course-registeration.l.aivencloud.com:10282";
+
 // Show the registration form when the "Register" button is clicked
 document.getElementById("register-btn").addEventListener("click", () => {
   document.getElementById("form-container").style.display = "block";
@@ -6,7 +9,7 @@ document.getElementById("register-btn").addEventListener("click", () => {
   document.getElementById("registration-form").setAttribute("data-action", "register");
 });
 
-// Handle form submission for course registration
+// Handle form submission for course registration or update
 document.getElementById("registration-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const name = document.getElementById("name").value;
@@ -18,35 +21,27 @@ document.getElementById("registration-form").addEventListener("submit", async (e
   const action = document.getElementById("registration-form").getAttribute("data-action");
 
   try {
+    let response;
     if (action === "register") {
-      // Handle new course registration
-      const response = await fetch('https://vgu-course-regesteration-portal-1.onrender.com:10282/register', {
+      response = await fetch(`${SERVER_URL}/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, enrollment, aec, vac, sec }),
       });
-
-      if (response.ok) {
-        const course = await response.json();
-        updateTableWithCourse(course);
-        clearFormAndShowMessage("Course registered successfully!");
-      } else {
-        alert(await response.text());
-      }
     } else if (action === "change") {
-      // Handle updating course
-      const response = await fetch(`https://vgu-course-regesteration-portal-1.onrender.com:10282/update/${enrollment}`, {
+      response = await fetch(`${SERVER_URL}/update/${enrollment}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, aec, vac, sec }),
       });
+    }
 
-      if (response.ok) {
-        updateCourseRow({ name, enrollment, aec, vac, sec });
-        clearFormAndShowMessage("Course updated successfully!");
-      } else {
-        alert(await response.text());
-      }
+    if (response.ok) {
+      const course = await response.json();
+      action === "register" ? updateTableWithCourse(course) : updateCourseRow(course);
+      clearFormAndShowMessage(`Course ${action === "register" ? "registered" : "updated"} successfully!`);
+    } else {
+      alert(await response.text());
     }
   } catch (err) {
     console.error("Error:", err);
@@ -60,18 +55,15 @@ document.getElementById("search-form-btn").addEventListener("click", async () =>
   const searchResult = document.getElementById("search-result");
   const tableBody = document.querySelector("#course-list tbody");
 
-  // Reset previous search results
   searchResult.style.display = "none";
   Array.from(tableBody.children).forEach(row => row.style.display = "none");
 
   if (enrollment) {
     try {
-      // Fetch data from the server
-      const response = await fetch(`https://vgu-course-regesteration-portal-1.onrender.com:10282/search/${enrollment}`);
+      const response = await fetch(`${SERVER_URL}/search/${enrollment}`);
       if (response.ok) {
         const course = await response.json();
 
-        // Check if a course was found
         const matchingRow = Array.from(tableBody.children).find(row =>
           row.getAttribute("data-enrollment") === enrollment
         );
@@ -79,7 +71,6 @@ document.getElementById("search-form-btn").addEventListener("click", async () =>
         if (matchingRow) {
           matchingRow.style.display = "table-row";
         } else {
-          // Dynamically add the course if it’s not already in the table
           updateTableWithCourse(course);
         }
       } else {
@@ -103,7 +94,6 @@ function updateTableWithCourse(course) {
   const image = document.getElementById("registered-image");
   const tableBody = document.querySelector("#course-list tbody");
 
-  // Show the table and the image if hidden
   if (table.style.display === "none") table.style.display = "table";
   if (image.style.display === "none") image.style.display = "block";
 
@@ -111,20 +101,18 @@ function updateTableWithCourse(course) {
   row.setAttribute("data-enrollment", course.enrollment);
 
   row.innerHTML = `
-    <td style="border: 1px solid #ccc; padding: 8px;">${course.name}</td>
-    <td style="border: 1px solid #ccc; padding: 8px;">${course.enrollment}</td>
-    <td style="border: 1px solid #ccc; padding: 8px;">${course.aec}</td>
-    <td style="border: 1px solid #ccc; padding: 8px;">${course.vac}</td>
-    <td style="border: 1px solid #ccc; padding: 8px;">${course.sec}</td>
-    <td style="border: 1px solid #ccc; padding: 8px;">
-      <button class="change-btn" style="background-color: #007BFF; color: #fff; border: none; border-radius: 5px; padding: 10px 15px; cursor: pointer;">Change course</button>
-      <button class="deregister-btn" style="background-color: #FD433C; color: #fff; border: none; border-radius: 5px; padding: 10px 15px; cursor: pointer;">Deregister</button>
+    <td>${course.name}</td>
+    <td>${course.enrollment}</td>
+    <td>${course.aec}</td>
+    <td>${course.vac}</td>
+    <td>${course.sec}</td>
+    <td>
+      <button class="change-btn">Change course</button>
+      <button class="deregister-btn">Deregister</button>
     </td>
   `;
 
   tableBody.appendChild(row);
-
-  // Attach event handlers for change and deregister buttons
   addChangeAndDeregisterHandlers(row, course);
 }
 
@@ -145,7 +133,7 @@ function clearFormAndShowMessage(message) {
   const successMessage = document.getElementById("success-message");
   successMessage.textContent = message;
   successMessage.style.display = "block";
-  setTimeout(() => { successMessage.style.display = "none"; }, 10282);
+  setTimeout(() => { successMessage.style.display = "none"; }, 3000);
 }
 
 // Attach event handlers to Change and Deregister buttons
@@ -155,7 +143,7 @@ function addChangeAndDeregisterHandlers(row, course) {
 
   changeBtn.onclick = () => {
     document.getElementById("form-container").style.display = "block";
-    document.getElementById("search-container").style.display = "none"; // Hide the search form
+    document.getElementById("search-container").style.display = "none";
     document.getElementById("form-title").textContent = "Change Course";
     document.getElementById("name").value = course.name;
     document.getElementById("enrollment").value = course.enrollment;
@@ -167,10 +155,9 @@ function addChangeAndDeregisterHandlers(row, course) {
 
   deregisterBtn.onclick = async () => {
     const tableBody = document.querySelector("#course-list tbody");
-    await fetch(`https://vgu-course-regesteration-portal-1.onrender.com:10282/deregister/${course.enrollment}`, { method: 'DELETE' });
+    await fetch(`${SERVER_URL}/deregister/${course.enrollment}`, { method: 'DELETE' });
     row.remove();
 
-    // Hide the table and image if there are no more rows
     if (!tableBody.children.length) {
       document.getElementById("course-list").style.display = "none";
       document.getElementById("registered-image").style.display = "none";
