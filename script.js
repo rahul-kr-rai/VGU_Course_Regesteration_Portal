@@ -20,7 +20,7 @@ document.getElementById("registration-form").addEventListener("submit", async (e
   try {
     if (action === "register") {
       // Handle new course registration
-      const response = await fetch('http://localhost:3000/register', {
+      const response = await fetch('https://vgu-course-regesteration-portal-1.onrender.com:3000/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, enrollment, aec, vac, sec }),
@@ -35,7 +35,7 @@ document.getElementById("registration-form").addEventListener("submit", async (e
       }
     } else if (action === "change") {
       // Handle updating course
-      const response = await fetch(`http://localhost:3000/update/${enrollment}`, {
+      const response = await fetch(`https://vgu-course-regesteration-portal-1.onrender.com:3000/update/${enrollment}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name, aec, vac, sec }),
@@ -67,7 +67,7 @@ document.getElementById("search-form-btn").addEventListener("click", async () =>
   if (enrollment) {
     try {
       // Fetch data from the server
-      const response = await fetch(`http://localhost:3000/search/${enrollment}`);
+      const response = await fetch(`https://vgu-course-regesteration-portal-1.onrender.com:3000/search/${enrollment}`);
       if (response.ok) {
         const course = await response.json();
 
@@ -167,7 +167,7 @@ function addChangeAndDeregisterHandlers(row, course) {
 
   deregisterBtn.onclick = async () => {
     const tableBody = document.querySelector("#course-list tbody");
-    await fetch(`http://localhost:3000/deregister/${course.enrollment}`, { method: 'DELETE' });
+    await fetch(`https://vgu-course-regesteration-portal-1.onrender.com:3000/deregister/${course.enrollment}`, { method: 'DELETE' });
     row.remove();
 
     // Hide the table and image if there are no more rows
